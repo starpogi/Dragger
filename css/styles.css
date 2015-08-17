@@ -1,0 +1,254 @@
+html 
+{
+   -moz-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+}
+
+
+.helptextBox
+{
+	border: 1px solid #669966;
+	background: #D9FF8C;
+	padding: 5px;
+	color: #000000;
+	position: absolute;
+	width: auto;
+	max-width: 450px;
+}
+
+.helptextBox { opacity: 0; }
+
+	.helptextBox i
+	{
+		font-size: 12px;
+	}
+
+#start
+{
+	padding-left: 30px;
+}
+
+#userForm input, #resForm input 
+{
+	padding: 2px;
+}
+
+.toggleTabs
+{
+	border: 1px solid black;
+	background: #CCCCCC;
+	padding: 3px;
+	cursor: pointer;
+	color: #48372A;
+}
+
+.activeTabs
+{
+	border: 1px solid black;
+	background: #000000;
+	color: #FFFFFF;
+	padding: 3px;
+	cursor: pointer;
+}
+
+#container
+{
+	position: relative;
+}
+
+#loadingScreen
+{
+	height: 100%;
+	width: 100%;
+	background: #FFFFFF;
+	opacity: 0.8;
+	position: absolute;
+	z-index: 201;
+	top: 0px;
+	left: -5px;
+}
+
+	#loadingScreenText
+	{
+		position: absolute;
+		left: 30%;
+		top: 30%;
+		background: #CCCCCC;
+		padding: 7px;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+
+
+#draggable
+{
+	width: 15px;
+	height: 40px;
+	margin-left: 3px;
+	background: transparent;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.majorPylon, .majorPylonLast, .minorPylon
+{
+	border-left: 1px solid black;
+	height: 40px;
+	margin-right: 17px;
+	display: inline-block;
+}
+
+	.majorPylonLast, .minorPylonLast {	margin-right: 0px;	}
+
+.minorPylon
+{
+	border-left: 1px dotted #999999;
+}
+
+#timeChooser
+{
+	position: relative;
+	margin-left: 10px;
+}
+
+#gui
+{
+	z-index: 99;
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	height: 20px;
+}
+
+	#referenceBar
+	{
+		float: left;
+		background: #0033FF;
+		position: relative;
+		height: 20px;
+		opacity: 0.7;
+	}
+	
+#takenRegion
+{
+	overflow: hidden;
+	height: 20px;
+	z-index: 198;
+	top: 10px;
+	position: absolute;
+}
+	
+	.takenBar
+	{
+		position: absolute;
+		background: #CC0000;
+		height: 20px;
+		opacity: 0.7;
+	}
+
+#selectorRegion
+{
+	top: 25px;
+	z-index: 200;
+	position: absolute;
+	width: 100%;
+}
+
+	.selector, .selectorStart
+	{
+		width: 15px;
+		height: 40px;
+		margin-right: 3px;
+		display: inline-block;
+		z-index: 205;
+	}
+	
+	.selectorStart	{	margin-left: 3px;				}
+	
+#timeLabel	{	}
+
+	.timeLabel
+	{
+		display: inline-block;
+		text-align: center;
+		width: 22px;
+		margin-right: 14px;
+		font-size: 14px;
+	}
+	
+	.timeLabel dd
+	{
+		font-size: 10px;
+		margin-left: 0px;
+		color: #666666;
+	}
+	
+#notification	
+{	
+	position: relative;
+	width: 100%;
+	padding-bottom: 25px;
+}
+
+	#msgA, #msgB	{ position: absolute; width: 100%;						}
+	#redo			{ margin-left: 20px; color: #0066FF; cursor: pointer;	}
+	#redo:hover		{ text-decoration: underline;							}
+	
+.timeInput	{ font-size: 12px; }
+
+#modeDivs
+{
+	margin-left: 21px;
+}
+
+.modePart
+{
+	padding: 5px;
+	border: 1px solid #999999;
+	clear: both;
+	display: inline-block;
+	cursor: pointer;
+	white-space: normal;
+	overflow: hidden
+}
+
+	.modePartChosen	
+	{	
+		border: 1px solid black; 
+		padding: 5px;
+		border: 1px solid #999999;
+		clear: both;
+		display: inline-block;
+		cursor: pointer;	
+	}
+	
+	.modeName 
+	{ 
+		text-align: right;
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		padding-right: 5px;
+		float: left;	
+		height: 55px;
+		white-space: normal;
+		border-right: 1px solid #999999;
+	}
+	.modeInfo { float: right; width: 168px; overflow: hidden; padding-left: 5px; }
+	
+		#dressModeName
+		{
+			width: 74px;
+		}
+		
+		#dressCancel
+		{
+			color: #990000;
+		}
+		
+		#dressCancel:hover
+		{
+			text-decoration: underline;
+		}

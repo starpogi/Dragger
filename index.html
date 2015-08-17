@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Dragger Demo</title>
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/calendar/calendar.css" />
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+   <div id="content">
+   
+      <h2>Dragger Demo</h2>
+           <form id="resForm" method="post" action="resform.php">
+             
+             <div id="modeDivs">
+                 <div id="primary" class="modePart">
+                   <div id="primaryModeName" class="modeName">Main</div>
+                   <div id="primaryModeInfo" class="modeInfo"><div id="primaryPlace"></div><div id="primaryDate"></div><div id="primaryTime"></div></div>
+               </div><div id="dress" class="modePart">
+                   <div id="dressModeName" class="modeName">Dress Rehearsal<br /></div>
+                   <div id="dressModeInfo" class="modeInfo"><span style="color: #666666; font-size: 10px;">only for musical performances</span><div id="dressPlace"></div><div id="dressDate"></div><div id="dressTime"></div><div id="dressCancel"></div></div>
+               </div>
+             </div>
+             <div style="margin-left: 21px">
+               <select class="timeInput" name="userPlace" id="userPlace">
+                   <option value="0">BU Beach</option>
+                   <option value="1">Marsh Chapel Kitchen</option>
+           
+            <input type="text" name="userDate" id="userDate" value="" />
+
+            <div id="timeSelector"></div>
+               <div id="ta"></div>
+             </div>
+             <p>&nbsp; </p>
+             <p id="primaryElements">
+               <label>Estimated Attendance
+               <input type="text" name="Attendance" id="Attendance" />
+               </label>
+               <label>We are charging an admission fee:
+               <input type="checkbox" name="Admission" id="Admission" />
+               </label>
+             </p>
+             <p id="dressElements" style="display:none">
+               <label>I/We will require use of the organ:
+               <input type="checkbox" name="Organ" id="Organ" />
+               </label>
+               <label>I/We will require use of the piano:
+               <input type="checkbox" name="Piano" id="Piano" />
+               </label>
+             </p>
+             
+           </form>
+           
+           <div id="authorize-div" style="display: none">
+            <span>Authorize access to Google Calendar API</span>
+            <!--Button for the user to click to initiate auth sequence -->
+            <button id="authorize-button">
+              Authorize
+            </button>
+          </div>
+          <pre id="output"></pre>
+   </div>
+</div>
+
+<script type="text/javascript" src="https://apis.google.com/js/client:plusone.js?onload=init"></script>
+<script type="text/javascript" src="js/mootools.js"></script>
+<script type="text/javascript" src="js/mootools-1.2-more.js"></script>
+<script type="text/javascript" src="js/timeSelector/timeGUI.js"></script>
+<script type="text/javascript" src="js/timeSelector/dateSelection.js"></script>
+<script type="text/javascript" src="js/timeSelector/timeSelection.js"></script>
+<script type="text/javascript" src="js/reservation/reserve.js"></script>
+<script type="text/javascript" src="js/alertSystem/notification.js"></script>
+<script type="text/javascript" src="js/calendar/calendar.js"></script>
+<script type="text/javascript">
+   
+window.addEvent('domready', function()
+{	
+	var beginTime = 9;
+	var endTime = 22;
+	var modes = ['primary', 'dress'];
+	var mode = 'primary';
+   
+   var currentDateRaw = new Date(),
+		 currentDate = currentDateRaw.format("%B %d, %Y");
+       
+   $('userDate').set("value", currentDate);
+	
+	var GUI = new timeGUI({
+			begins: beginTime,
+			ends: endTime,
+			modes: modes,
+			elementId: 'timeSelector',
+			timeOutputFieldName: 'eventTime',
+			dateOutputFieldName: 'eventDate',
+			areaOutputFieldName: 'eventArea',
+			loaderMessage: 'one moment please'
+	}).construct();
+   
+   var dateSelector = new dateSelection();
+   
+   function init() {
+      dateSelector.checkAuth();
+   }
+      
+	var timerSelector = new timeSelection({
+			begins: beginTime,
+			ends: endTime,
+			modes: modes,
+			introduction: "Drag to begin.",
+			whileSelectingMessage: "<start> - <end>",
+			afterSelectingMessage: "<start> - <end>",
+			errorSame: "You cannot select the same time!",
+			errorTaken: "That one's taken already!",
+			errorMessageShiftDelay: 1.5
+	});
+	
+	timerSelector.changeParameters($('userDate').get('value'), $('userPlace').get('value'));
+	timerSelector.start('function');
+	
+	// Developed by Aeron Glemann <http://electricprism.com/aeron> (c) 2007 
+	var a = new Calendar({userDate: 'F j, Y' }, {direction: 0.5, onHideStart: function() 
+	{ 
+		if(this.thisDate != $('userDate').get('value'))
+		{	this.changeParameters($('userDate').get('value'), $('userPlace').get('value'));	}
+	}.bindWithEvent(timerSelector)});
+	
+	$('userPlace').addEvent('change', function() 
+	{ 
+		this.changeParameters($('userDate').get('value'), $('userPlace').get('value'));
+	}.bindWithEvent(timerSelector));
+	
+});
+</script>
+</body>
+</html>
