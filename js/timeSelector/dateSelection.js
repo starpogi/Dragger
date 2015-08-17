@@ -6,7 +6,7 @@ var dateSelection = new Class({
 	
    CLIENT_ID: '43350135427-1mvfsm05001e2a8v9eb9o2vuvdctng5v.apps.googleusercontent.com',
    SCOPES: ['https://www.googleapis.com/auth/calendar.readonly'],
-   API_KEY: 'dragger-1040',
+   API_KEY: 'AIzaSyCw1tTqkkVyb8OMbcUO2RsGDzOkODKbqJw',
    
 	options:
 	{
