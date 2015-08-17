@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <title>Dragger Demo</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/styles.css" />
 <link rel="stylesheet" href="css/calendar/calendar.css" />
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -18,7 +19,7 @@
              
              <div id="modeDivs">
                  <div id="primary" class="modePart">
-                   <div id="primaryModeName" class="modeName">Main</div>
+                   <div id="primaryModeName" class="modeName">Main Event<br /></div>
                    <div id="primaryModeInfo" class="modeInfo"><div id="primaryPlace"></div><div id="primaryDate"></div><div id="primaryTime"></div></div>
                </div><div id="dress" class="modePart">
                    <div id="dressModeName" class="modeName">Dress Rehearsal<br /></div>
@@ -29,28 +30,16 @@
                <select class="timeInput" name="userPlace" id="userPlace">
                    <option value="0">BU Beach</option>
                    <option value="1">Marsh Chapel Kitchen</option>
-           
+               </select>
             <input type="text" name="userDate" id="userDate" value="" />
 
             <div id="timeSelector"></div>
                <div id="ta"></div>
              </div>
              <p>&nbsp; </p>
-             <p id="primaryElements">
-               <label>Estimated Attendance
-               <input type="text" name="Attendance" id="Attendance" />
-               </label>
-               <label>We are charging an admission fee:
-               <input type="checkbox" name="Admission" id="Admission" />
-               </label>
+             <p id="primaryElements">               
              </p>
              <p id="dressElements" style="display:none">
-               <label>I/We will require use of the organ:
-               <input type="checkbox" name="Organ" id="Organ" />
-               </label>
-               <label>I/We will require use of the piano:
-               <input type="checkbox" name="Piano" id="Piano" />
-               </label>
              </p>
              
            </form>
@@ -79,7 +68,7 @@
    
 window.addEvent('domready', function()
 {	
-	var beginTime = 9;
+	var beginTime = 8;
 	var endTime = 22;
 	var modes = ['primary', 'dress'];
 	var mode = 'primary';

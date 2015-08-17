@@ -165,13 +165,9 @@ var timeSelection = new Class({
 		$(this.mode + 'Date').set('html', $('userDate').get('value'));
 		this.elements.removeEvents('mouseenter');
 		notification(this.introduction);
-		
-		// For modes
-		if(this.mode == "dress")
-		{	$(this.mode+'ModeName').tween('height', 91);
-			$('primaryModeName').tween('height', 91);
-			//$('subEvent').tween('height', 315);
-		}
+      
+		$('dressModeName').tween('height', 110);
+      $('primaryModeName').tween('height', 110);
 	},
     
     determineTime: function(element)
@@ -382,13 +378,9 @@ var timeSelection = new Class({
 		{
 			$(othermode + 'Place').set('html', '');
 			$(othermode + 'Date').set('html', '');
-			if(othermode == "dress")
-			{
-				$('dressCancel').set('html', '');
-				$('dressModeName').tween('height', 55);
-				$('primaryModeName').tween('height', 55);
-				//$('subEvent').tween('height', 273);	
-			}
+         $('dressCancel').set('html', '');
+         $('dressModeName').tween('height', 90);
+         $('primaryModeName').tween('height', 90);
 		}
 		
 		$(mode).setStyle('background-color', '#CCCCCC');

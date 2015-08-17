@@ -3,6 +3,7 @@ html
    -moz-user-select: none;
    -webkit-user-select: none;
    -ms-user-select: none;
+   font-family: 'Roboto', sans-serif;
 }
 
 
@@ -165,7 +166,12 @@ html
 		z-index: 205;
 	}
 	
-	.selectorStart	{	margin-left: 3px;				}
+	.selectorStart	{	margin-left: 3px;	}
+   
+   .selector:hover
+	{
+		border-color: red;
+	}
 	
 #timeLabel	{	}
 
@@ -196,7 +202,7 @@ html
 	#redo			{ margin-left: 20px; color: #0066FF; cursor: pointer;	}
 	#redo:hover		{ text-decoration: underline;							}
 	
-.timeInput	{ font-size: 12px; }
+.timeInput	{ font-size: 14px; padding: 1px; }
 
 #modeDivs
 {
@@ -211,7 +217,8 @@ html
 	display: inline-block;
 	cursor: pointer;
 	white-space: normal;
-	overflow: hidden
+	overflow: hidden;
+   margin: 4px;
 }
 
 	.modePartChosen	

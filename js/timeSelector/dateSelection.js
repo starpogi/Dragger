@@ -12,8 +12,8 @@ var dateSelection = new Class({
 	{
       // Calendar IDs
 		places: [
-         ['BU Beach', 'tpemf5f4hg8q5nv5t3tki7proc%40group.calendar.google.com/public'],
-         ['Marsh Chapel Kitchen', 'rue7t103ma07i6j3u1vfpbjfvo%40group.calendar.google.com/private-03ed8f57591a588883cfa349d8cef786']
+         ['BU Beach', 'tpemf5f4hg8q5nv5t3tki7proc@group.calendar.google.com'],
+         ['Marsh Chapel Kitchen', 'rue7t103ma07i6j3u1vfpbjfvo@group.calendar.google.com']
       ]
 	},
 	
@@ -63,12 +63,6 @@ var dateSelection = new Class({
       );
    },
    
-   fireAuth: function()
-   {
-      console.log('asd');
-      window.fireEvent('auth_success');
-   },
-   
    handleAuthResult: function(authResult)
    {
       /*
@@ -78,11 +72,12 @@ var dateSelection = new Class({
       */
       var authorizeDiv = document.getElementById('authorize-div');
       
-      if (authResult && !authResult.error) 
+      if(authResult && !authResult.error) 
       {
          authorizeDiv.style.display = 'none';
-         gapi.client.load('calendar', 'v3', this.fireAuth)
-         window.fireEvent('auth_success');
+         gapi.client.load('calendar', 'v3', function() {
+            window.fireEvent('auth_success');
+         });
       } 
       else 
       {
@@ -124,85 +119,56 @@ var dateSelection = new Class({
 		$(this.loaderReference).fade(0.8);
 		$(this.loaderTextReference).fade(1);
       
-		date = new Date().parse(date);
-      console.log(area);
-		console.log(this.places);
+      var date = new Date().parse(date);
+      var calendarId = this.places[area][1];
       
       var request = gapi.client.calendar.events.list({
-          'calendarId': this.places(area),
+          'calendarId': calendarId,
           'timeMin': date.toISOString(),
           'showDeleted': false,
           'singleEvents': true,
           'maxResults': 10,
           'orderBy': 'startTime'
-      }.bind(this));
+      });
+      
       
       request.execute(function(resp) {
-          var events = resp.items;
-          console.log('Upcoming events:');
-
-          if (events.length > 0) {
-            for (i = 0; i < events.length; i++) {
-              var event = events[i];
-              var when = event.start.dateTime;
-              if (!when) {
-                when = event.start.date;
-              }
-              console.log(event.summary + ' (' + when + ')');
+         var events = resp.items;
+         
+         emptyArray();
+         
+         if (events.length > 0) 
+         {
+            for (i = 0; i < events.length; i++) 
+            {
+               var event = events[i];
+               
+               if (!event.start.dateTime) {
+                  startTime = event.start.date;
+               }
+               
+               var start = splitParts(new Date().parse(event.start.dateTime));
+               var end = splitParts(new Date().parse(event.end.dateTime));
+               
+               // TODO: Fix this piece of shit. Should just be an object instead of this retarded string.
+               // Also, should support non :00, :30 minutes. To be more abstract.
+               var dateString = start.hr + ((start.min == 30) ? ".5" : ".0" ) + 
+               " - " + end.hr + ((end.min == 30) ? ".5" : ".0" );
+               addToArray(dateString);
             }
-          } else {
-            console.log('No upcoming events found.');
-          }
-
-        });
-      
-		// var service = new google.gdata.calendar.CalendarService('gdata-marsh-chapel');
-      // console.log('http://www.google.com/calendar/feeds/' + this.places[area][1] +'/full');
-		// var query = new google.gdata.calendar.CalendarEventQuery('http://www.google.com/calendar/feeds/' + this.places[area][1] +'/full');
-		
-		// query.setOrderBy('starttime');
-		// query.setSortOrder('ascending');
-		// query.setMinimumStartTime(date+'T09:00:00.000-05:00');
-		// query.setMaximumStartTime(date+'T22:00:00.000-05:00');
-		// query.setSingleEvents(true);
-		
-		// service.getEventsFeed(query, listTaken, handleError);
-		
-		// function listTaken(feedRoot)
-		// {
-			// emptyArray();
-			// var entries = feedRoot.feed.getEntries();
-			
-			// var z = '';
-			
-			// var len = entries.length;
-			  // for (var i = 0; i < len; i++) {
-				// var entry = entries[i];
-				// var title = entry.getTitle().getText();
-				// var endJSTime = null;
-				// var startJSTime = null;
-				// var times = entry.getTimes();
-				// if (times.length > 0) {
-				  // startJSTime = times[0].getStartTime().getDate();
-				  // endJSTime = times[0].getEndTime().getDate();
-				// }
-				
-				// var dateString = ''
-				// if (!times[0].getStartTime().isDateOnly()) {
-				  // dateString += " " + startJSTime.getHours()  + 
-					  // ((startJSTime.getMinutes() == 30) ? ".5" : ".0" ) + " - " + endJSTime.getHours() + ((endJSTime.getMinutes() == 30) ? ".5" : ".0" );
-					  
-					// addToArray(dateString);
-				// }
-			  // }
-			// if(len == 0)
-			// {	emptyArray();	}
-		// }
-		
-		// function handleError(e)
-		// {
-			// console.log(e);
-		// }
+         }
+         
+     }.bind(this));
+     
+     var splitParts = function(dateObj)
+     {
+         // Splits the datetime into hr, min components
+         return {
+            'hr': dateObj.format('%H'),
+            'min': dateObj.format('%M')
+         };
+         
+     }.bind(this);
 		
 		var addToArray = function(element)
 		{
